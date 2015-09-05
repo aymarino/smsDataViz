@@ -1,0 +1,48 @@
+<html>
+
+  <head>
+    <title>SMS Data</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Include scripts -->
+    <script type="text/javascript" src="plugins/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="plugins/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="plugins/alasql.min.js"></script>
+    <script type="text/javascript" src="plugins/sql.js"></script>
+    <script type="text/javascript" src="plugins/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="js/import.js"></script>
+    <script type="text/javascript" src="js/contactData.js"></script>
+    <script type="text/javascript" src="js/dateData.js"></script>
+    <script type="text/javascript" src="js/visual.js"></script>
+  </head>
+  
+  <body>
+    <p class="instr" id="ready"> </p>
+    <input type="file" id="messageDB" onchange="loadMessageDB(this.files);">
+    <input type="file" id="addrDB" onchange="loadAddrDB(this.files);">
+    <br><br>
+
+    <div id="buttons">
+      <button onclick="importContactData();">Compile Contact Data</button>
+      <button onclick="importDateData()">Compile Date Data</button>
+    </div>
+    
+    <div id="pieChart"></div>
+    <div id="lineChart"></div>
+    <div id="masterTableDiv">
+      <table align="center" id="masterTable">
+      <thead id="masterTableHead">
+      </thead>
+      <tbody id="masterTableBody">
+      </tbody>
+      </table>
+    </div>
+
+    <script type="text/javascript">
+      document.getElementById('ready').innerHTML = instr0;
+      document.getElementById('buttons').style.visibility = 'hidden';
+    </script>
+  </body>
+
+</html>
