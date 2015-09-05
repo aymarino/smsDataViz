@@ -3,8 +3,7 @@ var BY_WEEK = [];
 var BY_MONTH = [];
 
 var DateEntry = function(in_date, in_sent, in_received) {
-  if (typeof(in_date) == 'string') this.date = parseDate(in_date);
-  else this.date = in_date;
+  this.date = in_date;
   this.numSent = in_sent;
   this.numReceived = in_received;
   this.total = this.numSent + this.numReceived;
@@ -21,13 +20,21 @@ function importDateData() {
     ORDER BY day ASC");
   dateCount = dateCount[0].values;
 
+  var prev = parseDate(dateCount[0][2]);
+  prev.setTime(prev.getTime() - 86400000);
   for (var i = 0; i < dateCount.length; i++) {
-    var date = dateCount[i][2];
+    var date = parseDate(dateCount[i][2]);
     var numSent = dateCount[i][0];
     var numReceived = dateCount[i][1];
 
     var newDate = new DateEntry(date, numSent, numReceived);
+    while (prev.getTime() < newDate.date.getTime() - 86400000) {
+      prev.setTime(prev.getTime() + 86400000);
+      var fillDate = new DateEntry(new Date(prev.getTime()), 0, 0);
+      BY_DATE.push(fillDate);
+    }
     BY_DATE.push(newDate);
+    prev.setTime(newDate.date.getTime());
   }
 
   BY_WEEK = binBy(BY_DATE, 7);
